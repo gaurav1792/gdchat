@@ -2,23 +2,56 @@
 <html>
 <head lang="en">
     <meta charset="UTF-8">
-    <title></title>
-</head>
-<body>
+    <title>gd_chat</title>
+    <head>
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}main.css">
 
-{% block content %}
+
+<script src="{{ STATIC_URL }}jquery.min.js"></script>
+    <script src="{{ STATIC_URL }}main.js"></script>
+
+
+</head>
+
+<body onload="callAjax()">
+<div id="container">
+    <div id="header">
+        <div id="username">{{ cur_user.first_name }}</div>
+    </div>
+    <div id="left">
+            {% block content %}
 {% if d != 1 %}
-    hello {{ user }}
+ {{ user }}
     <form method="post" action="">{% csrf_token %}
         <ul>
             {{ form.as_p }}
         </ul>
-    <input type="submit" name="send" value="Send message" />
+    <input type="submit"  name="send" value="Send message" />
     </form>
 {% else %}
     <h4> Message Sent Successfully <h4>
 
 {% endif %}
+
+    </div>
+    <div id="right">
+
+        <div id="switch">
+            <ul id="chat_result2">
+
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
+
+
+
+
+
+
+
+
 
 
 

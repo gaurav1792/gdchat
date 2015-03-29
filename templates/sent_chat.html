@@ -1,0 +1,17 @@
+<script src="{{ STATIC_URL }}jquery.min.js"></script>
+    <script src="{{ STATIC_URL }}main.js"></script>
+
+
+{% if msgs.count > 0 %}
+
+    {% for msg in msgs %}
+        <li id="msg-container">
+            <div id="msg_user">{{ msg.to_user }}</div>
+            <div id="msg">{{ msg.msg }}</div>
+            <div id="time">Sent{{ msg.msg_date }}</div>
+        </li>
+    {% endfor %}
+
+{% else %}
+    <li> Mo Messages Received</li>
+{% endif %}

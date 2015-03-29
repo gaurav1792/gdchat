@@ -1,12 +1,21 @@
-{% for msg in msgs %}
-     {% if msg.to_user == cur_user.username %}
-        <div id="msg">
-            <div id="text">
-                {{ msg.msg }}
-            </div><div id="time">
-                {{ msg.msg_date }}
-            </div>
-        </div>
-        <br>
-    {% endif %}
-{% endfor %}
+<script src="{{ STATIC_URL }}jquery.min.js"></script>
+    <script src="{{ STATIC_URL }}main.js"></script>
+
+
+{% if msgs.count > 0 %}
+
+    {% for msg in msgs %}
+        <li id="msg-container">
+            {% if msg.to_user == cur_user.username  %}
+                <div id="msg">{{ msg.msg }}</div>
+                <div id="time">Recieved{{ msg.msg_date }}</div>
+            {% else %}
+                <div id="msg">{{ msg.msg }}</div>
+                <div id="time">Sent{{ msg.msg_date }}</div>
+            {% endif %}
+        </li>
+    {% endfor %}
+
+{% else %}
+    <li> Mo Messages Received</li>
+{% endif %}

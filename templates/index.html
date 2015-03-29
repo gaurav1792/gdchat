@@ -11,6 +11,19 @@
     <script src="{{ STATIC_URL }}main.js"></script>
 
 
+    <script>
+        function recieved_chat()
+    {
+        var element = document.getElementById("switch");
+        element.innerHTML = "<ul id="+"'chat_result'"+"></ul>";
+    }
+        function sent_chat()
+    {
+        var element = document.getElementById("switch");
+        element.innerHTML = "<ul id="+"'chat_result1'"+"></ul>";
+    }
+    </script>
+
 </head>
 
 <body onload="callAjax()">
@@ -34,9 +47,19 @@
     {% endfor %}
     </div>
     <div id="right">
-        <ul id="chat_result">
+        <div id="chat_type">
+            <table>
+                <tr>
+                    <td><a href="#" onclick="recieved_chat()">All Recieved Messages</a></td>
+                    <td><a href="#" onclick="sent_chat()">All Sent Messages</a></td>
+                </tr>
+            </table>
 
-        </ul>
+        </div>
+        <div id="switch">
+            <ul id="chat_result">
+            </ul>
+        </div>
     </div>
 </body>
 </html>

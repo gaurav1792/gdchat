@@ -13,5 +13,6 @@ urlpatterns = patterns('',
     url(r'^chat$', 'chat.views.chat'),
     url(r'^test$', 'chat.views.test'),
     url(r'^test12$', 'chat.views.test12'),
+    url(r'^test13$', 'chat.views.test13'),
     url(r'^admin/', include(admin.site.urls)),
 )
