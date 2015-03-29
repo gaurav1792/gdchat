@@ -5,7 +5,10 @@
 {% if msgs.count > 0 %}
 
     {% for msg in msgs %}
-        <li>{{ msg.msg }}{{ msg.msg_date }}</li>
+        <li id="msg-container">
+            <div id="msg">{{ msg.msg }}</div>
+            <div id="time">{{ msg.msg_date }}</div>
+        </li>
     {% endfor %}
 
 {% else %}

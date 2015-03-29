@@ -5,19 +5,28 @@
     <title>gd_chat</title>
     <head>
 <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}main.css">
+
+
+<script src="{{ STATIC_URL }}jquery.min.js"></script>
+    <script src="{{ STATIC_URL }}main.js"></script>
+
+
 </head>
-</head>
-<body>
+
+<body onload="callAjax()">
 <div id="container">
+    <div id="header">
+        <div id="username">{{ cur_user.first_name }}</div>
+    </div>
     <div id="left">
     {% for user in users %}
         {% for s in status %}
             {% if user.username != cur_user.username %}
                 {% if user.username == s.user  %}
                     {% if s.is_online %}
-                        <a href="/users/get/{{ user.id }}/"><p><h2><img src="{{ STATIC_URL }}gfx/online.png" alt="Online Icon" style="width:10px;height:10px">{{ user.first_name }}</h2></p></a>
+                        <div id="user"><a href="/users/get/{{ user.id }}/"><p><img src="{{ STATIC_URL }}gfx/online.png" alt="Online Icon" style="width:10px;height:10px">&nbsp;&nbsp;&nbsp;{{ user.first_name }}</p></a></div>
                     {% else %}
-                        <a href="/users/mail/{{ user.id }}/"><p><h2><img src="{{ STATIC_URL }}gfx/ofline.png" alt="Ofline Icon" style="width:10px;height:10px">{{ user.first_name }}</h2></p></a>
+                        <div id="user"><a href="/users/mail/{{ user.id }}/"><p><img src="{{ STATIC_URL }}gfx/ofline.png" alt="Ofline Icon" style="width:10px;height:10px">&nbsp;&nbsp;&nbsp;{{ user.first_name }}</p></a></div>
                     {% endif %}
                 {% endif %}
             {% endif %}
@@ -25,7 +34,9 @@
     {% endfor %}
     </div>
     <div id="right">
-    <iframe src="/chat" width=100% height="500px">
+        <ul id="chat_result">
+
+        </ul>
     </div>
 </body>
 </html>
