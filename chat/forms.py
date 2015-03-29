@@ -39,3 +39,6 @@ class MessageForm(forms.Form):
     class Meta:
         fields = ['message']
         model = Message
+
+class ImageForm(forms.Form):
+    image = forms.FileField()

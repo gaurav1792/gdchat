@@ -21,10 +21,13 @@ from django.views.decorators.csrf import csrf_exempt
 import json
 from django.core.mail import send_mail
 from django.contrib.auth.models import User
+from .functions import handle_uploaded_file
+
 import datetime
 from django.utils.timezone import now as utcnow
 from django.utils.safestring import mark_safe
-from .forms import MessageForm
+from .forms import MessageForm, ImageForm
+
 import json
 from django.utils.safestring import mark_safe
 # Create your views here.
@@ -126,7 +129,7 @@ def mailuser(request,u_id):
             sub = "Message from: "+ request.user.username
             mail_msg =request.POST['message']
             from_email = settings.EMAIL_HOST_USER
-            send_mail(sub , mail_msg , from_email ,[user.username] , fail_silently=True)
+            send_mail(sub , mail_msg , from_email ,[user.username] , fail_silently=False)
             p=Message(
                 to_user=user,
                 from_user=request.user,
@@ -146,10 +149,40 @@ def mailuser(request,u_id):
 
 
 @login_required
-def test(request):
+def chat(request):
 	r = Message.objects.all()
 	return render(request, 'chat.html', {'msgs':r,'cur_user':request.user})
+
+@login_required
+def test(request):
+	r = Message.objects.all()
+	return render(request, 'test.html', {'msgs':r,'cur_user':request.user})
+
 
 def send_message(request):
     #do nothing
     return('/')
+
+def upload_image(request,u_id):
+    '''Simple view method for uploading an image
+
+    '''
+    if request.method == 'POST':
+        form = ImageForm(request.POST, request.FILES['POST'])
+        if form.is_valid():
+            save_file(request.FILES['image'])
+            return HttpResponse('Thanks for uploading the image')
+        else:
+            return HttpResponse('Invalid image')
+    else:
+        form = ImageForm()
+    return render (request,'upload.html', {'form': form})
+
+def save_file(file, path=''):
+    ''' Little helper to save a file
+    '''
+    filename = file._get_name()
+    fd = open('%s/%s' % (MEDIA_ROOT, str(path) + str(filename)), 'wb')
+    for chunk in file.chunks():
+        fd.write(chunk)
+    fd.close()

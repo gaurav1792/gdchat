@@ -12,7 +12,6 @@ function AutoRefresh( t ) {
 <body> <!--onload="JavaScript:AutoRefresh(5000);"-->
 
 {% for msg in msgs %}
-    {% if msg.to_user == cur_user %}
         <div id="msg">
             <div id="text">
                 {{ msg.msg }}
@@ -21,7 +20,6 @@ function AutoRefresh( t ) {
             </div>
         </div>
         <br>
-    {% endif %}
 {% endfor %}
 
 </body>

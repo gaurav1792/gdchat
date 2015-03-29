@@ -10,7 +10,7 @@ urlpatterns = patterns('',
     url(r'^login$', 'chat.views.login_view'),
     url(r'^logout$', 'chat.views.logout_view'),
     url(r'^signup$', 'chat.views.signup'),
+    url(r'^chat$', 'chat.views.chat'),
     url(r'^test$', 'chat.views.test'),
-   #url(r'^test1$', 'chat.views.test1'),
     url(r'^admin/', include(admin.site.urls)),
 )
