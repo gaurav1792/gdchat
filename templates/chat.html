@@ -1,0 +1,12 @@
+{% for msg in msgs %}
+     {% if msg.to_user == cur_user.username %}
+        <div id="msg">
+            <div id="text">
+                {{ msg.msg }}
+            </div><div id="time">
+                {{ msg.msg_date }}
+            </div>
+        </div>
+        <br>
+    {% endif %}
+{% endfor %}

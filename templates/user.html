@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+
+{% block content %}
+{% if d != 1 %}
+    hello {{ user }}
+    <form method="post" action="">{% csrf_token %}
+        <ul>
+            {{ form.as_p }}
+        </ul>
+    <input type="submit" name="send" value="Send message" />
+    </form>
+{% else %}
+    <h4> Message Sent Successfully <h4>
+
+{% endif %}
+
+
+
+
+
+{% endblock %}
+</body>
+</html>

@@ -1,0 +1,7 @@
+hello {{ user }}
+<form method="post" action="">{% csrf_token %}
+        <ul>
+            {{ form.as_p }}
+        </ul>
+    <input type="submit" name="send" value="Send message" />
+    </form>

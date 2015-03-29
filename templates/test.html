@@ -1,0 +1,28 @@
+<html>
+<head>
+<script type="text/JavaScript">
+<!--
+function AutoRefresh( t ) {
+	setTimeout("location.reload(true);", t);
+    window.scrollBy(0, 10000000);
+}
+//   -->
+</script>
+</head>
+<body> <!--onload="JavaScript:AutoRefresh(5000);"-->
+
+{% for msg in msgs %}
+    {% if msg.to_user == cur_user %}
+        <div id="msg">
+            <div id="text">
+                {{ msg.msg }}
+            </div><div id="time">
+                {{ msg.msg_date }}
+            </div>
+        </div>
+        <br>
+    {% endif %}
+{% endfor %}
+
+</body>
+</html>
