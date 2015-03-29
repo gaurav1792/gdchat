@@ -6,21 +6,22 @@ function AutoRefresh( t ) {
 	setTimeout("location.reload(true);", t);
     window.scrollBy(0, 10000000);
 }
+
+
+
+
 //   -->
 </script>
+    <script src="{{ STATIC_URL }}jquery.min.js"></script>
+    <script src="{{ STATIC_URL }}main.js"></script>
 </head>
-<body> <!--onload="JavaScript:AutoRefresh(5000);"-->
+<body onload="callAjax()"> <!--onload="JavaScript:AutoRefresh(5000);"-->
 
-{% for msg in msgs %}
-        <div id="msg">
-            <div id="text">
-                {{ msg.msg }}
-            </div><div id="time">
-                {{ msg.msg_date }}
-            </div>
-        </div>
-        <br>
-{% endfor %}
+
+<ul id="chat_result">
+
+</ul>
+
 
 </body>
 </html>

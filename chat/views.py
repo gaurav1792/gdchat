@@ -153,10 +153,14 @@ def chat(request):
 	r = Message.objects.all()
 	return render(request, 'chat.html', {'msgs':r,'cur_user':request.user})
 
-@login_required
 def test(request):
-	r = Message.objects.all()
-	return render(request, 'test.html', {'msgs':r,'cur_user':request.user})
+	return render(request, 'test.html')
+
+
+@login_required
+def test12(request):
+	r = Message.objects.filter(to_user=request.user.username)
+	return render(request, 'test12.html', {'msgs':r})
 
 
 def send_message(request):
