@@ -35,7 +35,7 @@ class Login(AuthenticationForm):
         return form
 
 class MessageForm(forms.Form):
-    message = forms.CharField(widget = forms.Textarea(attrs={'placeholder': 'message'}))
+    message = forms.CharField(widget = forms.Textarea(attrs={'id': 'post-text','cols':50,'rows':2}))
     class Meta:
         fields = ['message']
         model = Message

@@ -15,6 +15,7 @@ class Message(models.Model):
 class Login_status(models.Model):
     user = models.CharField(max_length=30)
     is_online=models.BooleanField(default=0)
+    last_seen = models.DateTimeField(auto_now_add=True, blank=True)
 
 
 User.profile = property(lambda u: UserProfile.objects.get_or_create(user=u)[0])

@@ -22,9 +22,9 @@ from django.views.decorators.csrf import csrf_exempt
 import json
 from django.core.mail import send_mail
 from django.contrib.auth.models import User
-from .functions import handle_uploaded_file
+from .functions import *
 
-import datetime
+from datetime import datetime
 from django.utils.timezone import now as utcnow
 from django.utils.safestring import mark_safe
 from .forms import MessageForm, ImageForm
@@ -34,12 +34,13 @@ from django.utils.safestring import mark_safe
 # Create your views here.
 
 
+
 def index(request, auth_form=None, user_form=None):
     # User is logged in
     if request.user.is_authenticated():
         user = User.objects.all()
         status = Login_status.objects.all()
-        return render(request, 'index.html', {'users': user, 'status': status, 'cur_user': request.user})
+        return render(request, 'index.html', {'cur_user': request.user})
 
 
 
@@ -52,6 +53,11 @@ def index(request, auth_form=None, user_form=None):
                       'home.html',
                       {'auth_form': auth_form, 'user_form': user_form, })
 
+
+def chkstatus(request):
+    user = User.objects.all()
+    status = Login_status.objects.all()
+    return render(request, 'alluser.html', {'users': user, 'status': status, 'cur_user': request.user})
 
 def login_view(request):
     if request.method == 'POST':
@@ -75,6 +81,17 @@ def logout_view(request):
     t.save()
     logout(request)
     return redirect('/')
+
+def set_offline(request):
+    set_offline()
+
+def set_online(request,u_id=0):
+    t = Login_status.objects.get(user=request.user)
+    t.is_online = 1
+    t.last_seen=datetime.now()
+    t.save()
+    return HttpResponse('  ')
+
 
 
 def signup(request):
@@ -104,7 +121,7 @@ def user(request, u_id):
     d = 0
     if request.POST:
         form = MessageForm(request.POST)
-        if (form.is_valid):
+        if form.is_valid():
             p = Message(
                 to_user=user,
                 from_user=request.user,
@@ -113,12 +130,35 @@ def user(request, u_id):
             )
             p.save()
             d = 1
-            return render(request, 'user.html', {'user': user, 'd': d})
+            return render(request, 'user.html', {'user': user, 'd': d,'form': form})
     else:
         form = MessageForm()
 
     # return render_to_response('user.html',locals(),context_instance=RequestContext(request))
     return render(request, 'user.html', {'user': user, 'd': d, 'form': form})
+
+from django.views.decorators.csrf import csrf_exempt, csrf_protect
+
+@csrf_exempt
+def create_post(request, u_id):
+    user = User.objects.get(id=u_id)
+    if request.POST:
+        post_data = request.POST.get('message')
+        form = MessageForm(request.POST)
+        if form.is_valid():
+            p = Message(
+                to_user=user,
+                from_user=request.user,
+                msg_type='text',
+                msg=request.POST['message'],
+            )
+            p.save()
+            return HttpResponse(
+                json.dumps("done")
+            )
+    return HttpResponse(
+            json.dumps("notdone")
+    )
 
 
 @login_required
@@ -178,8 +218,19 @@ def test13(request):
     return render(request, 'sent_chat.html', {'msgs': r})
 
 
-def send_message(request):
-    # do nothing
+def send_message(request, u_id):
+    user = User.objects.get(id=u_id)
+    if request.method == "POST":
+        form = MessageForm(request.POST, request.POST['message'])
+        if form.is_valid():
+            msg_text = request.POST['message']
+            p = Message(
+                to_user=user,
+                from_user=request.user,
+                msg_type='text',
+                msg=msg_text,
+            )
+            p.save()
     return ('/')
 
 

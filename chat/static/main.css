@@ -32,6 +32,8 @@ ul{
     width:750px;
     height: 50px;
     margin:0 auto;
+    padding-left: 30px;
+    padding-right: 30px;
     background-color: #009688;
 }
 #left {
@@ -87,7 +89,20 @@ ul{
     text-align: right;
 }
 
+#last_seen{
+    font-size:10px;
+    text-align: right;
+}
+
 #msg_user{
     font-size:18px;
     color: #179661;
+}
+
+#footer{
+    float:right;
+    width:500px;
+    height: 50px;
+
+    background-color: #eee7df;
 }

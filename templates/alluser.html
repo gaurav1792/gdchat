@@ -1,0 +1,20 @@
+
+
+<script src="{{ STATIC_URL }}jquery.min.js"></script>
+    <script src="{{ STATIC_URL }}main.js"></script>
+
+
+    {% for user in users %}
+        {% for s in status %}
+            {% if user.username != cur_user.username %}
+                {% if user.username == s.user  %}
+                    {% if s.is_online %}
+                        <div id="user"><a href="/users/get/{{ user.id }}/"><p><img src="{{ STATIC_URL }}gfx/online.png" alt="Online Icon" style="width:10px;height:10px">&nbsp;&nbsp;&nbsp;{{ user.first_name }}</p></a><div id="last_seen">{{ s.last_seen }}</div></div>
+
+                    {% else %}
+                        <div id="user"><a href="/users/mail/{{ user.id }}/"><p><img src="{{ STATIC_URL }}gfx/ofline.png" alt="Ofline Icon" style="width:10px;height:10px">&nbsp;&nbsp;&nbsp;{{ user.first_name }}</p></a><div id="last_seen">{{ s.last_seen }}</div></div>
+                    {% endif %}
+                {% endif %}
+            {% endif %}
+        {% endfor %}
+    {% endfor %}

@@ -13,25 +13,16 @@
 
 </head>
 
-<body onload="callAjax()">
+<body onload="callAjax2()">
 <div id="container">
     <div id="header">
         <div id="username">{{ cur_user.first_name }}</div>
     </div>
     <div id="left">
             {% block content %}
-{% if d != 1 %}
  {{ user }}
-    <form method="post" action="">{% csrf_token %}
-        <ul>
-            {{ form.as_p }}
-        </ul>
-    <input type="submit"  name="send" value="Send message" />
-    </form>
-{% else %}
-    <h4> Message Sent Successfully <h4>
 
-{% endif %}
+
 
     </div>
     <div id="right">
@@ -40,8 +31,20 @@
             <ul id="chat_result2">
 
             </ul>
+
+
         </div>
+
     </div>
+                <div id="footer">
+                    <form id="msg-form" method="post" action="">{% csrf_token %}
+                        {{ form }}
+                    <input type="submit"  name="send" value="Send" />
+                    </form>
+                   <!-- <form id="post-form" method="post" action="">{% csrf_token %}
+                    <input type="submit"  name="send" value="Send" />
+                    </form>-->
+                </div>
 </body>
 </html>
 

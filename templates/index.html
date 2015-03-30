@@ -26,25 +26,18 @@
 
 </head>
 
-<body onload="callAjax()">
+<body onload="callAjax1()" onunload="setoffline()">
 <div id="container">
     <div id="header">
-        <div id="username">{{ cur_user.first_name }}</div>
+        <table><tr><td>
+        <div id="home"><a href=""><img src="{{ STATIC_URL }}gfx/home.png" alt="Online Icon" style="width:30px;height:30px"></a></div></td>
+            <td><div id="username">{{ cur_user.first_name }}</div></td>
+        <td><div id="logout"><a href="/logout">Logout</a></div></td></tr></table>
     </div>
     <div id="left">
-    {% for user in users %}
-        {% for s in status %}
-            {% if user.username != cur_user.username %}
-                {% if user.username == s.user  %}
-                    {% if s.is_online %}
-                        <div id="user"><a href="/users/get/{{ user.id }}/"><p><img src="{{ STATIC_URL }}gfx/online.png" alt="Online Icon" style="width:10px;height:10px">&nbsp;&nbsp;&nbsp;{{ user.first_name }}</p></a></div>
-                    {% else %}
-                        <div id="user"><a href="/users/mail/{{ user.id }}/"><p><img src="{{ STATIC_URL }}gfx/ofline.png" alt="Ofline Icon" style="width:10px;height:10px">&nbsp;&nbsp;&nbsp;{{ user.first_name }}</p></a></div>
-                    {% endif %}
-                {% endif %}
-            {% endif %}
-        {% endfor %}
-    {% endfor %}
+    <div id="allusers">
+
+    </div>
     </div>
     <div id="right">
         <div id="chat_type">
