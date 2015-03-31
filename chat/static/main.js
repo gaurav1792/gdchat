@@ -81,8 +81,6 @@ function setoffline()
  {
      $.ajax({url:"logout", async:true})
  }
-
-
 }
  function set_online()
 {
@@ -98,8 +96,30 @@ function setoffline()
     });
 }
 
+ function set_counter()
+{
+     $.ajax({
+            //method:'post',
+            url: 'setcounter',
+            dataType: 'html',
+            success: setTimeout(callAjax3,interval)
+    });
+}
+ function set_counter1()
+{
+     $.ajax({
+            //method:'post',
+            url: 'setcounter',
+            dataType: 'html',
+            success: setTimeout(callAjax4,interval)
+    });
+}
+
  function callAjax1() {
-    set_online();
+     set_online();
+     set_counter();
+ }
+ function callAjax3(){
     setTimeout(doAjax, interval);
     setTimeout(doAjax1, interval);
     setTimeout(doAjax4, interval);
@@ -108,20 +128,34 @@ function setoffline()
 
  function callAjax2() {
      set_online();
+     set_counter1();
+    setTimeout(doAjax2, interval);
+}
+
+ function callAjax4() {
     setTimeout(doAjax2, interval);
 }
 
 function display(data, textStatus, jqXHR)
 {
-    $('#chat_result').html(data);
+    console.log(data);
+    $('#chat_result').append(data);
+    var d = document.getElementById('right');
+    if(d.scrollHeight > d.clientHeight)
+    d.scrollTop = d.scrollHeight - d.clientHeight;
 }
+
  function display1(data, textStatus, jqXHR)
 {
     $('#chat_result1').html(data);
 }
+
  function display2(data, textStatus, jqXHR)
-{
-    $('#chat_result2').html(data);
+{   console.log(data);
+    $('#chat_result2').append(data);
+    var d = document.getElementById('right');
+    if(d.scrollHeight > d.clientHeight)
+    d.scrollTop = d.scrollHeight - d.clientHeight;
 }
 
  function display4(data, textStatus, jqXHR)

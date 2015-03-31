@@ -29,7 +29,7 @@ ul{
     margin:0 auto;
 }
 #header {
-    width:750px;
+    width:690px;
     height: 50px;
     margin:0 auto;
     padding-left: 30px;
@@ -39,7 +39,7 @@ ul{
 #left {
     float:left;
     width:250px;
-    height: 500px;
+    height: 570px;
     overflow-y: scroll;
     background-color: #FFFFFF;
 }
@@ -89,7 +89,7 @@ ul{
     width: 300px;
     background-color: #FFFFFF;
     padding:10px;
-     border: solid #000;
+    border: solid #000;
     border-width: 0 0 1px 0;
 }
 #msg{
@@ -114,7 +114,7 @@ ul{
 #footer{
     float:right;
     width:500px;
-    height: 50px;
+    height: 70px;
 
     background-color: #eee7df;
 }

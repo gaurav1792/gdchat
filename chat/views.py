@@ -23,7 +23,7 @@ import json
 from django.core.mail import send_mail
 from django.contrib.auth.models import User
 from .functions import *
-
+from django.db.models import Max
 from datetime import datetime
 from django.utils.timezone import now as utcnow
 from django.utils.safestring import mark_safe
@@ -34,6 +34,17 @@ from django.utils.safestring import mark_safe
 # Create your views here.
 
 
+def static_var(varname, value):
+   def decorate(func):
+     setattr(func, varname, value)
+     return func
+   return decorate
+
+@static_var('counter',0)
+def setcounter(request,u_id=0):
+    test12.counter =0
+    test11.counter =0
+    return HttpResponse(test11.counter)
 
 def index(request, auth_form=None, user_form=None):
     # User is logged in
@@ -85,7 +96,9 @@ def logout_view(request):
 def set_offline(request):
     set_offline()
 
+
 def set_online(request,u_id=0):
+
     t = Login_status.objects.get(user=request.user)
     t.is_online = 1
     t.last_seen=datetime.now()
@@ -201,15 +214,25 @@ def test(request):
 
 
 @login_required
+@static_var('counter',0)
 def test11(request, u_id):
     p = User.objects.get(id=u_id)
-    r = Message.objects.filter(Q(to_user=request.user.username, from_user=p.username) |Q(from_user=request.user.username, to_user=p.username))
+    r = Message.objects.filter(Q(Q(to_user=request.user.username, from_user=p.username) | Q(from_user=request.user.username, to_user=p.username))&Q(id__gt=test11.counter))
+    for q in r:
+        if q.id>test11.counter:
+            test11.counter=q.id
     return render(request, 'chat.html', {'msgs': r, 'cur_user':request.user})
 
 
+
+
 @login_required
+@static_var('counter',0)
 def test12(request):
-    r = Message.objects.filter(to_user=request.user.username)
+    r=Message.objects.filter(Q(to_user=request.user.username)&Q(id__gt=test12.counter))
+    for q in r:
+        if q.id>test12.counter:
+            test12.counter=q.id
     return render(request, 'recieved_chat.html', {'msgs': r})
 
 

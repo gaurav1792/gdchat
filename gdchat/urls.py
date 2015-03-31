@@ -18,6 +18,7 @@ urlpatterns = patterns('',
     url(r'^send_message$', 'chat.views.send_message'),
     url(r'^set_online$', 'chat.views.set_online'),
     url(r'^test13$', 'chat.views.test13'),
+    url(r'^setcounter$', 'chat.views.setcounter'),
     url(r'^create_post$', 'chat.views.create_post'),
     url(r'^admin/', include(admin.site.urls)),
 )
