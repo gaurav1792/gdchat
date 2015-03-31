@@ -24,7 +24,9 @@
     <div id="left">
             {% block content %}
  {{ user }}
-Note: If user Is ofline we will also notify him/her via email.
+<h3>Note: If user is offline, we will also notify him/her via email.</h3>
+<a href="/users/get/{{ user.id }}/upload" target="framename">Send Image</a>
+
 
 
     </div>

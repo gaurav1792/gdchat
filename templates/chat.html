@@ -8,12 +8,24 @@
         {% if msg.to_user == cur_user.username  %}
             <li id="msg-container-left">
 
-                <div id="msg">{{ msg.msg }}</div>
+                <div id="msg">
+                    {% if msg.msg_type == "text" %}
+                        {{ msg.msg }}
+                    {% else %}
+                        <img src="{{ STATIC_URL }}{{ msg.msg }}" height="100px" width="100px"/>
+                    {% endif %}
+                </div>
                 <div id="time">Recieved{{ msg.msg_date }}</div>
             </li>
             {% else %}
             <li id ="msg-container-right">
-                <div id="msg">{{ msg.msg }}</div>
+                <div id="msg">
+                    {% if msg.msg_type == "text" %}
+                    {{ msg.msg }}
+                {% else %}
+                    <img src="{{ STATIC_URL }}{{ msg.msg }}" height="100px" width="100px"/>
+                {% endif %}
+                </div>
                 <div id="time">Sent{{ msg.msg_date }}</div>
             </li>
             {% endif %}

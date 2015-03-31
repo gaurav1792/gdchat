@@ -20,6 +20,7 @@ from django.core.context_processors import csrf
 from django.core.urlresolvers import reverse
 from django.views.decorators.csrf import csrf_exempt
 import json
+import uuid
 from django.core.mail import send_mail
 from django.contrib.auth.models import User
 from .functions import *
@@ -288,7 +289,7 @@ def upload(request, u_id):
     if request.method == 'POST':
         form = ImageForm(request.POST, request.FILES)
         if form.is_valid():
-            save_file(request.FILES['image'])
+            save_file(request,request.FILES['image'],u_id)
             return HttpResponse('Thanks for uploading the image')
         else:
             return HttpResponse('form not valid')
@@ -297,7 +298,21 @@ def upload(request, u_id):
     return render(request, 'upload.html', {'form': form})
 
 
-def save_file(f):
-    with open('static', 'wb+') as destination:
+def save_file(request,f,u_id):
+    u=uuid.uuid1()
+    uid_str = u.urn
+    str = uid_str[9:]
+    l1='chat/static/'
+    l2='uploads/'+str+'.jpeg'
+    location=l1+l2
+    with open(location, 'wb+') as destination:
         for chunk in f.chunks():
             destination.write(chunk)
+    user = User.objects.get(id=u_id)
+    p = Message(
+                to_user=user,
+                from_user=request.user,
+                msg_type='image',
+                msg=l2,
+            )
+    p.save()

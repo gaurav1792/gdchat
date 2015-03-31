@@ -2,7 +2,7 @@
  * Created by gd on 29-03-2015.
  */
 
-var interval = 2000;  // 1000 = 1 second, 3000 = 3 seconds
+var interval = 1000;  // 1000 = 1 second, 3000 = 3 seconds
 function doAjax() {
     $.ajax({
             //method:'post',
