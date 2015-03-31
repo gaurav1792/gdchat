@@ -15,8 +15,11 @@
 
 <body onload="callAjax2()">
 <div id="container">
-    <div id="header">
-        <div id="username">{{ cur_user.first_name }}</div>
+     <div id="header">
+        <table><tr><td>
+        <div id="home"><a href="/"><img src="{{ STATIC_URL }}gfx/home.png" alt="Online Icon" style="width:30px;height:30px"></a></div></td>
+            <td><div id="username">{{ cur_user.first_name }}</div></td>
+        <td><div id="logout"><a href="/logout">Logout</a></div></td></tr></table>
     </div>
     <div id="left">
             {% block content %}
@@ -37,13 +40,8 @@
 
     </div>
                 <div id="footer">
-                    <form id="msg-form" method="post" action="">{% csrf_token %}
-                        {{ form }}
-                    <input type="submit"  name="send" value="Send" />
-                    </form>
-                   <!-- <form id="post-form" method="post" action="">{% csrf_token %}
-                    <input type="submit"  name="send" value="Send" />
-                    </form>-->
+                 
+                   <textarea type="text" name="sent_msg" id="sent_msg" rows="2" cols="50"></textarea><input type="button" value="Send" onclick="send_data()">
                 </div>
 </body>
 </html>

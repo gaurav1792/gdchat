@@ -2,7 +2,7 @@
  * Created by gd on 29-03-2015.
  */
 
-var interval = 1000;  // 1000 = 1 second, 3000 = 3 seconds
+var interval = 2000;  // 1000 = 1 second, 3000 = 3 seconds
 function doAjax() {
     $.ajax({
             //method:'post',
@@ -52,43 +52,27 @@ function doAjax() {
     });
 }
 
- $('#post-form').on('submit', function(event){
-    event.preventDefault();
-    console.log("form submitted!")  // sanity check
-    create_post();
-});
 
- function create_post() {
-    console.log("create post is working!")
-    $.ajax({
+
+  function send_data()
+  {
+      console.log("send data worked..!");
+      var msg= $('#sent_msg').val();
+      console.log( msg);
+      $.ajax({
         url : "create_post",
-        type : 'post',
-        data : {message: $('#post-text').val()},
-        success: function() {
-            $('#post-text').val('');
+        type : 'GET',
+        data : {message: msg},
+        success: function(data, textStatus, jqXHR) {
+            $('#sent_msg').val('');
             console.log(data);
-        }
+        },
+        async: false
 
     });
-};
 
+  }
 
-/* $(function(){
-     $('#message').keyup(function(e){
-         if(e.keyCode == 13) {
-             $.ajax({
-                 type: "POST",
-                 url: 'send_message',
-                 data: {
-                     'message': $('#message').val(),
-                     'csrfmiddlewaretoken': $("input[name=csrfmiddlewaretoken]").val()
-                 }
-
-             });
-         }
-     });
- });
-*/
 
 
 function setoffline()
@@ -108,12 +92,13 @@ function setoffline()
             dataType: 'html',
             success: display,
             complete: function () {
-                    setTimeout(doAjax, interval);
+                    setTimeout(set_online, interval+1000);
             },
             async: true
     });
 }
-function callAjax1() {
+
+ function callAjax1() {
     set_online();
     setTimeout(doAjax, interval);
     setTimeout(doAjax1, interval);

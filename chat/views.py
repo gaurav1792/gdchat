@@ -130,27 +130,27 @@ def user(request, u_id):
             )
             p.save()
             d = 1
-            return render(request, 'user.html', {'user': user, 'd': d,'form': form})
+            return render(request, 'user.html', {'user': user, 'd': d,'form': form,'cur_user':request.user})
     else:
         form = MessageForm()
 
     # return render_to_response('user.html',locals(),context_instance=RequestContext(request))
-    return render(request, 'user.html', {'user': user, 'd': d, 'form': form})
+    return render(request, 'user.html', {'user': user, 'd': d, 'form': form,'cur_user':request.user})
 
 from django.views.decorators.csrf import csrf_exempt, csrf_protect
 
 @csrf_exempt
 def create_post(request, u_id):
     user = User.objects.get(id=u_id)
-    if request.POST:
-        post_data = request.POST.get('message')
-        form = MessageForm(request.POST)
+    if request.method == 'GET':
+        post_data = request.GET['message']
+        form = MessageForm(request.GET)
         if form.is_valid():
             p = Message(
-                to_user=user,
-                from_user=request.user,
-                msg_type='text',
-                msg=request.POST['message'],
+            to_user=user,
+            from_user=request.user,
+            msg_type='text',
+            msg=post_data,
             )
             p.save()
             return HttpResponse(
@@ -181,12 +181,12 @@ def mailuser(request, u_id):
             )
             p.save()
             d = 2
-            return render(request, 'user.html', {'user': user, 'd': d})
+            return render(request, 'user.html', {'user': user, 'd': d,'cur_user':request.user})
     else:
         form = MessageForm()
 
     # return render_to_response('user.html',locals(),context_instance=RequestContext(request))
-    return render(request, 'user.html', {'user': user, 'd': d, 'form': form})
+    return render(request, 'user.html', {'user': user, 'd': d, 'form': form,'cur_user':request.user})
 
 
 @login_required
@@ -234,29 +234,21 @@ def send_message(request, u_id):
     return ('/')
 
 
-@login_required
-def upload_image(request, u_id):
-    '''Simple view method for uploading an image
-
-    '''
+@csrf_exempt
+def upload(request, u_id):
     if request.method == 'POST':
-        form = ImageForm(request.POST, request.FILES['POST'])
+        form = ImageForm(request.POST, request.FILES)
         if form.is_valid():
             save_file(request.FILES['image'])
             return HttpResponse('Thanks for uploading the image')
         else:
-            return HttpResponse('Invalid image')
+            return HttpResponse('form not valid')
     else:
         form = ImageForm()
     return render(request, 'upload.html', {'form': form})
 
 
-@login_required
-def save_file(file, path=''):
-    ''' Little helper to save a file
-    '''
-    filename = file._get_name()
-    fd = open('%s/%s' % (MEDIA_ROOT, str(path) + str(filename)), 'wb')
-    for chunk in file.chunks():
-        fd.write(chunk)
-    fd.close()
+def save_file(f):
+    with open('static', 'wb+') as destination:
+        for chunk in f.chunks():
+            destination.write(chunk)

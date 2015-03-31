@@ -41,4 +41,5 @@ class MessageForm(forms.Form):
         model = Message
 
 class ImageForm(forms.Form):
+    """Image upload form."""
     image = forms.FileField()

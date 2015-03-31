@@ -5,15 +5,18 @@
 {% if msgs.count > 0 %}
 
     {% for msg in msgs %}
-        <li id="msg-container">
-            {% if msg.to_user == cur_user.username  %}
+        {% if msg.to_user == cur_user.username  %}
+            <li id="msg-container-left">
+
                 <div id="msg">{{ msg.msg }}</div>
                 <div id="time">Recieved{{ msg.msg_date }}</div>
+            </li>
             {% else %}
+            <li id ="msg-container-right">
                 <div id="msg">{{ msg.msg }}</div>
                 <div id="time">Sent{{ msg.msg_date }}</div>
+            </li>
             {% endif %}
-        </li>
     {% endfor %}
 
 {% else %}
