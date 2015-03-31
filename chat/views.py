@@ -174,8 +174,34 @@ def create_post(request, u_id):
     )
 
 
-@login_required
+@csrf_exempt
 def mailuser(request, u_id):
+    user = User.objects.get(id=u_id)
+    if request.method == 'GET':
+        post_data = request.GET['message']
+        form = MessageForm(request.GET)
+        if form.is_valid():
+            sub = "Message from: " + request.user.username
+            mail_msg = request.GET['message']
+            from_email = settings.EMAIL_HOST_USER
+            send_mail(sub, mail_msg, from_email, [user.username], fail_silently=False)
+            p = Message(
+            to_user=user,
+            from_user=request.user,
+            msg_type='text',
+            msg=post_data,
+            )
+            p.save()
+            return HttpResponse(
+                json.dumps("done")
+            )
+    return HttpResponse(
+            json.dumps("notdone")
+    )
+
+
+@login_required
+def mailuser1(request, u_id):
     user = User.objects.get(id=u_id)
     form = MessageForm()
     d = 0
