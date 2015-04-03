@@ -13,7 +13,7 @@ Skype: gaurav9911103459 <br>
 
 ##Prerequisites 
 
-Install Python 2.7.9
+Install Python 3.4.3
 <a href="https://www.python.org/downloads/">Download</a>
 
 To set Path in Environmental Variable
