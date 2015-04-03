@@ -1,35 +1,60 @@
-# python-getting-started
+GD-Chat 
+=============
 
-A barebones Python app, which can easily be deployed to Heroku.
+Pressplaytabs.com <br>
+Name: Gaurav Dubey <br>
+Email: gaurav9911103459@gmail.com <br>
+Phone: +919582973374 <br>
+Skype: gaurav9911103459 <br>
 
-This application support the [Getting Started with Python on Heroku](https://devcenter.heroku.com/articles/getting-started-with-python) article - check it out.
 
-## Running Locally
 
-Make sure you have Python [installed properly](http://install.python-guide.org).  Also, install the [Heroku Toolbelt](https://toolbelt.heroku.com/).
+***
 
-```sh
-$ git clone git@github.com:heroku/python-getting-started.git
-$ cd python-getting-started
-$ pip install -r requirements.txt
-$ python manage.py syncdb
-$ foreman start web
+##Prerequisites 
+
+Install Python 2.7.9
+<a href="https://www.python.org/downloads/">Download</a>
+
+To set Path in Environmental Variable
+```  
+C:\Python34\;C:\Python34\Scripts;
+```
+Install setuptools 12.0.4
+<a href="https://pypi.python.org/pypi/setuptools">Download</a>
+
+Install pip
+```  
+easy_install pip.
 ```
 
-Your app should now be running on [localhost:5000](http://localhost:5000/).
-
-## Deploying to Heroku
-
-```sh
-$ heroku create
-$ git push heroku master
-$ heroku run python manage.py syncdb
-$ heroku open
+Install pip
+```  
+pip install django.
 ```
 
-## Documentation
 
-For more information about using Python on Heroku, see these Dev Center articles:
+##Application Installation
 
-- [Python on Heroku](https://devcenter.heroku.com/categories/python)
+To set the application locally, first clone the repo
 
+```  
+git clone https://github.com/gaurav1792/gdchat.git
+```
+Changing Directory
+```  
+cd gdchat
+```
+Sync the Database
+
+```
+python manage.py syncdb
+```
+
+Finally, start the development server to preview the application
+
+```
+python manage.py runserver
+```
+
+Now Open 127.0.0.1:8000 in web browser
